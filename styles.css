@@ -190,6 +190,8 @@ section {
     text-decoration: none;
     font-weight: 700;
     border-radius: 50px;
+    position: relative;
+    overflow: hidden;
     transition: all 0.3s ease;
     box-shadow: var(--shadow-glow);
     animation: fadeIn 1s ease-out 0.8s both;
@@ -198,6 +200,50 @@ section {
 .cta-button:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 40px rgba(212, 165, 116, 0.3);
+}
+
+@keyframes shine-sweep {
+    0% {
+        transform: translateX(-140%) skewX(-20deg);
+        opacity: 0;
+    }
+    15% {
+        opacity: 0.85;
+    }
+    100% {
+        transform: translateX(140%) skewX(-20deg);
+        opacity: 0;
+    }
+}
+
+.cta-button::after,
+.project-link::after,
+.download-cv::after,
+.submit-button::after {
+    content: '';
+    position: absolute;
+    top: -40%;
+    left: -50%;
+    width: 60%;
+    height: 180%;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.2) 25%,
+        rgba(255, 255, 255, 0.65) 45%,
+        rgba(255, 255, 255, 0.2) 65%,
+        transparent 100%
+    );
+    transform: translateX(-140%) skewX(-20deg);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.cta-button:hover::after,
+.project-link:hover::after,
+.download-cv:hover::after,
+.submit-button:hover::after {
+    animation: shine-sweep 0.9s ease-out;
 }
 
 /* Section Headings */
@@ -422,6 +468,8 @@ section {
     transition: all 0.3s ease;
     font-size: 0.95rem;
     display: inline-block;
+    position: relative;
+    overflow: hidden;
 }
 
 .link-figma {
@@ -503,6 +551,8 @@ section {
     border: 2px solid var(--accent);
     border-radius: 50px;
     transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .download-cv:hover {
@@ -573,6 +623,8 @@ section {
     cursor: pointer;
     transition: all 0.3s ease;
     align-self: flex-start;
+    position: relative;
+    overflow: hidden;
 }
 
 .submit-button:hover {
