@@ -412,6 +412,23 @@ section {
     font-size: 3rem;
     color: var(--accent);
     overflow: hidden;
+    position: relative;
+}
+
+.badge-in-progress {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #f97316;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 12px;
+    border-radius: 999px;
+    z-index: 10;
+    pointer-events: none;
 }
 
 .project-image img {
