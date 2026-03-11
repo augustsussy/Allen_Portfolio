@@ -12,22 +12,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Form submission handler (guarded in case form is missing)
-const contactFormEl = document.querySelector('.contact-form');
-if (contactFormEl) {
-    contactFormEl.addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        // Get form values (not used here, but left for future enhancements)
-        const name = document.getElementById('name')?.value || '';
-        const email = document.getElementById('email')?.value || '';
-        const subject = document.getElementById('subject')?.value || '';
-        const message = document.getElementById('message')?.value || '';
-
-        alert('Thank you for your message! I\'ll get back to you soon.');
-        this.reset();
-    });
-}
+// Contact form uses native HTML POST to FormSubmit (no JS interception)
 
 // Active nav link on scroll
 window.addEventListener('scroll', () => {
