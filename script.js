@@ -78,7 +78,8 @@ document.addEventListener('DOMContentLoaded', function() {
         '.about-text',
         '.about-image',
         '.contact-form',
-        '.section-heading'
+        '.section-heading',
+        '.experience-item'
     ];
 
     // Apply initial hidden state with small offsets
@@ -97,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.about-image').forEach(el => el.style.transform = 'translate3d(50px, 0, 0) scale(0.9)');
     document.querySelectorAll('.contact-form').forEach(el => el.style.transform = 'translate3d(0, 50px, 0)');
     document.querySelectorAll('.section-heading').forEach(el => el.style.transform = 'translate3d(0, 30px, 0)');
+    document.querySelectorAll('.experience-item').forEach(el => el.style.transform = 'translate3d(-40px, 0, 0)');
 
     // Hero gets a quicker transition for responsive parallax
     const heroContent = document.querySelector('.hero-content');

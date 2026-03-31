@@ -737,6 +737,80 @@ footer p {
     box-shadow: 0 0 0 3px rgba(212,165,116,0.12);
 }
 
+/* Work Experience Section */
+.experience-list {
+    margin-top: 2rem;
+}
+
+.experience-item {
+    border-left: 3px solid var(--accent-color, #333);
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.experience-header h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.experience-role {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin: 0.25rem 0 0;
+    font-style: italic;
+}
+
+.experience-date {
+    font-size: 0.85rem;
+    opacity: 0.6;
+    white-space: nowrap;
+    font-style: italic;
+}
+
+.experience-bullets {
+    padding-left: 1.25rem;
+    margin: 0;
+}
+
+.experience-bullets li {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    margin-bottom: 0.4rem;
+    line-height: 1.6;
+}
+
+/* GameNest internship label */
+.project-internship {
+    font-size: 0.8rem;
+    font-style: italic;
+    opacity: 0.6;
+    margin: 0.25rem 0 0.5rem;
+}
+/* Certificate link */
+.cert-link {
+    display: inline-block;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    font-style: italic;
+    opacity: 0.75;
+    text-decoration: underline;
+    transition: opacity 0.2s ease;
+    color: var(--accent);
+}
+
+.cert-link:hover {
+    opacity: 1;
+}
 /* Responsive Design */
 @media (max-width: 768px) {
     nav .container {
