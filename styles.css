@@ -360,6 +360,10 @@ section {
     text-align: center;
     transition: all 0.3s ease;
     border: 1px solid rgba(212, 165, 116, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
 }
 
 .service-card:hover {
@@ -1005,10 +1009,13 @@ footer p {
     .services-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
+        max-width: 620px;
+        margin: 2rem auto 0;
     }
 
     .service-card {
         padding: 2rem 1.5rem;
+        max-width: 100%;
     }
 
     .service-card h3 {
@@ -1224,6 +1231,8 @@ footer p {
     /* Services */
     .services-grid {
         gap: 1rem;
+        max-width: 420px;
+        margin: 1.5rem auto 0;
     }
 
     .service-card {
