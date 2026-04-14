@@ -13,7 +13,12 @@
     <nav>
         <div class="container">
             <a href="#home" class="logo">Gee</a>
-            <ul>
+            <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#services">Services</a></li>
@@ -28,8 +33,8 @@
     <section id="home">
         <div class="hero-content">
             <h1>Allen Gerard F. Dizon</h1>
-            <p class="hero-subtitle">Designer & Developer</p>
-            <p class="specialty">UI/UX Design • Web Design • Figma Specialist</p>
+            <p class="hero-subtitle">UI/UX Designer & Figma Specialist</p>
+            <p class="specialty">Crafting polished, user-centered interfaces for web & mobile</p>
             <a href="#projects" class="cta-button">View My Work</a>
         </div>
     </section>
@@ -38,16 +43,15 @@
     <section id="about">
         <div class="container">
             <h2 class="section-heading">About Me</h2>
-            <p class="section-subtitle">Crafting beautiful digital experiences with purpose</p>
+            <p class="section-subtitle">Designer with a frontend edge based in the Philippines, open to full-time, part-time, and freelance work</p>
             
             <div class="about-content">
                 <div class="about-text">
-                    <p>Hello! I'm a passionate designer and developer specializing in creating beautiful, user-centered digital experiences. My primary focus is on UI/UX design using Figma, where I bring ideas to life through thoughtful design systems and interactive prototypes.</p>
+                    <p>I'm a UI/UX designer based in the Philippines, focused on creating interfaces that look polished and feel effortless to use. I work primarily in Figma from early wireframes all the way through to high-fidelity prototypes and I care about every detail that makes a design feel finished and professional.</p>
                     
-                    <p>With expertise in both design and development, I bridge the gap between aesthetics and functionality. I believe great design should not only look stunning but also solve real problems and create meaningful connections with users.</p>
+                    <p>I also have a frontend development background, which means I don't just design for how things look I think about how they actually get built. That combination lets me bridge the gap between design and code more effectively than most.</p>
                     
-                    <p>When I'm not designing in Figma or coding, you'll find me exploring the latest design trends, learning new tools, and continuously refining my craft.</p>
-                    <p>I recently completed my internship at IntelliSeven Technology Solutions Inc. as a Frontend Developer – UI/UX Designer, where I collaborated on a Ticketing System and delivered GameNest, a gaming device rental platform, as my individual capstone output.</p>
+                    <p>I recently completed my internship at IntelliSeven Technology Solutions Inc., where I delivered GameNest a full-featured gaming device rental platform as my individual capstone. It's the kind of project that pushed me to handle complex user flows, multiple screen states, and a cohesive dark UI aesthetic all at once.</p>
                     <div class="education-box">
                         <h3>Education</h3>
                         <h4>Bulacan State University Main Campus</h4>
@@ -94,43 +98,25 @@
     <section id="services">
         <div class="container">
             <h2 class="section-heading">What I Offer</h2>
-            <p class="section-subtitle">Comprehensive design and development services tailored to your needs</p>
+            <p class="section-subtitle">Focused on UI/UX design, web interfaces, and Figma prototyping</p>
             
-            <div class="services-grid">
+            <div class="services-grid" style="grid-template-columns: repeat(3, 1fr);">
                 <div class="service-card">
                     <div class="service-icon">🎨</div>
                     <h3>UI/UX Design</h3>
-                    <p>Creating intuitive and visually appealing user interfaces with a focus on user experience and conversion optimization.</p>
+                    <p>Designing intuitive, visually polished interfaces in Figma, from wireframes and user flows through to complete high-fidelity prototypes.</p>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">🖥️</div>
                     <h3>Web Design</h3>
-                    <p>Designing responsive, modern websites that look stunning on all devices and deliver exceptional user experiences.</p>
+                    <p>Creating responsive, modern landing pages and web interfaces that look great on all devices and communicate a brand clearly.</p>
                 </div>
                 
                 <div class="service-card">
                     <div class="service-icon">🔧</div>
                     <h3>Figma Prototyping</h3>
-                    <p>Building interactive prototypes and design systems in Figma that bring your ideas to life before development.</p>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">💻</div>
-                    <h3>Web Development</h3>
-                    <p>Translating designs into clean, efficient code with HTML, CSS, and JavaScript to create functional websites.</p>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">📱</div>
-                    <h3>Responsive Design</h3>
-                    <p>Ensuring your digital products work flawlessly across all screen sizes and devices for maximum reach.</p>
-                </div>
-                
-                <div class="service-card">
-                    <div class="service-icon">🚀</div>
-                    <h3>Brand Identity</h3>
-                    <p>Developing cohesive visual identities that communicate your brand's values and resonate with your audience.</p>
+                    <p>Building interactive prototypes and design systems in Figma so ideas can be tested and reviewed before a single line of code is written.</p>
                 </div>
             </div>
         </div>
@@ -191,7 +177,9 @@
                             <span class="tag">UX Design</span>
                             <span class="tag">Meal Planning</span>
                         </div>
-                        <p>A mobile meal planner app featuring an intuitive interface for organizing daily meals. Designed with warm, earthy tones and a clean layout to make meal planning effortless and enjoyable.</p>                        <div class="project-links">
+                        <p>A mobile meal planner app featuring an intuitive interface for organizing daily meals. Designed with warm, earthy tones and a clean layout to make meal planning effortless and enjoyable.</p>
+                        <div class="project-links">
+                            <a href="plaits.html" class="project-link link-live">View Case Study</a>
                             <a href="https://www.figma.com/design/HugXcCj4IJ6J664LeYZRm7/PLAITS--MOBILE-UI-FOR-MEAL-PLANNER-?m=auto&t=YJCju9HEMIv6HAzU-6" class="project-link link-figma" target="_blank">View Prototype</a>
                         </div>
                     </div>
@@ -250,6 +238,7 @@
         </div>
         <p>A full-featured rental device web app with KYC verification, device browsing, and a complete checkout flow. Designed with a bold dark aesthetic for gamers renting high-end mobile and gaming devices.</p>
         <div class="project-links">
+            <a href="gamenest.html" class="project-link link-live">View Case Study</a>
             <a href="https://www.figma.com/design/omIHF0Zj5SA17Bl1RzQAAb/GameNest--Rental-Device-Web-App-?node-id=0-1&t=IuMZwWoB9HvccRnP-1" class="project-link link-figma" target="_blank">View Prototype</a>
         </div>
     </div>
@@ -366,7 +355,6 @@
                 
                 <div class="contact-info">
                     <p>Or reach me directly at <a href="mailto:dizon.allen.f.2177@gmail.com?subject=Inquiry%20from%20Portfolio&body=Hi%20Allen%2C%0A%0AI%20would%20like%20to%20get%20in%20touch%20about...">dizon.allen.f.2177@gmail.com</a></p>
-                    <!-- Replace the email address above (yourname@gmail.com) with your real Gmail address -->
                 </div>
             </div>
         </div>
@@ -380,9 +368,4 @@
                 <a href="https://www.linkedin.com/in/allen-gerard-dizon-799544351/" class="social-link" target="_blank" title="LinkedIn" aria-label="LinkedIn" rel="noopener noreferrer">
                     <i class="fab fa-linkedin-in" aria-hidden="true"></i>
                 </a>
-                <a href="https://www.facebook.com/aegeezz" class="social-link" target="_blank" title="Facebook" aria-label="Facebook" rel="noopener noreferrer">
-                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
-                </a>
-                <script src="script.js"></script>
-            </body>
-            </html>
+                <a href="https://www.facebook.com/aegeezz" class="social-link" target

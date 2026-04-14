@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameNest Case Study — Gee</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Case study page overrides */
+        section {
+            min-height: unset;
+            padding: 5rem 0;
+        }
+
+        .cs-hero {
+            min-height: 60vh !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+            position: relative;
+            overflow: hidden;
+            padding: 10rem 0 6rem !important;
+        }
+
+        .cs-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at 70% 50%, rgba(212, 165, 116, 0.07) 0%, transparent 60%);
+        }
+
+        .cs-hero-inner {
+            text-align: center;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            animation: fadeInUp 0.9s ease-out;
+        }
+
+        .cs-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .cs-back-link:hover { color: var(--accent); }
+
+        .cs-hero-label {
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .cs-hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .cs-hero-sub {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .cs-tags {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Meta strip */
+        .cs-meta {
+            background: var(--bg-secondary);
+            border-top: 1px solid rgba(212, 165, 116, 0.1);
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .cs-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+
+        .cs-meta-item {
+            padding: 2rem;
+            border-right: 1px solid rgba(212, 165, 116, 0.1);
+            text-align: center;
+        }
+
+        .cs-meta-item:last-child { border-right: none; }
+
+        .cs-meta-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .cs-meta-value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* Content sections */
+        .cs-content {
+            background: var(--bg-primary);
+        }
+
+        .cs-block {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.08);
+        }
+
+        .cs-block:last-child { border-bottom: none; }
+
+        .cs-section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .cs-block h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 1.25rem;
+            font-weight: 700;
+        }
+
+        .cs-block p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.85;
+            margin-bottom: 1rem;
+        }
+
+        .cs-block p:last-child { margin-bottom: 0; }
+
+        /* Steps */
+        .cs-steps { margin-top: 1.5rem; }
+
+        .cs-step {
+            display: flex;
+            gap: 1.25rem;
+            margin-bottom: 1.75rem;
+            align-items: flex-start;
+        }
+
+        .cs-step-num {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(212, 165, 116, 0.08);
+            border: 1px solid rgba(212, 165, 116, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--accent);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .cs-step-body h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .cs-step-body p {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+
+        /* Highlight card */
+        .cs-callout {
+            background: rgba(212, 165, 116, 0.05);
+            border-left: 3px solid var(--accent);
+            border-radius: 10px;
+            padding: 1.5rem 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .cs-callout h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .cs-callout p {
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+
+        /* Outcome list */
+        .cs-outcomes { margin-top: 1.25rem; }
+
+        .cs-outcome-row {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .cs-outcome-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+            margin-top: 8px;
+        }
+
+        .cs-outcome-row p { margin-bottom: 0; }
+
+        /* CTA strip */
+        .cs-cta {
+            background: var(--bg-secondary);
+            border-top: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .cs-cta-inner {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .cs-cta-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .cs-cta-text p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .cs-cta-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .cs-hero-title { font-size: 2.5rem; }
+            .cs-hero-inner { padding: 0 1.5rem; }
+            .cs-meta-grid { grid-template-columns: repeat(2, 1fr); }
+            .cs-meta-item { border-bottom: 1px solid rgba(212, 165, 116, 0.1); }
+            .cs-block { padding: 3rem 1.5rem; }
+            .cs-cta-inner { padding: 3rem 1.5rem; flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">Gee</a>
+            <ul>
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#resume">Resume</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="cs-hero">
+        <div class="cs-hero-inner">
+            <a href="index.html#projects" class="cs-back-link">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </a>
+            <p class="cs-hero-label">Case Study</p>
+            <h1 class="cs-hero-title">GameNest</h1>
+            <p class="cs-hero-sub">Rental Device Web App — Internship Capstone at IntelliSeven Technology Solutions Inc.</p>
+            <div class="cs-tags">
+                <span class="tag">UI/UX Design</span>
+                <span class="tag">Figma</span>
+                <span class="tag">Web App</span>
+                <span class="tag">KYC Flow</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meta strip -->
+    <section class="cs-meta" style="padding: 0 !important; min-height: unset !important;">
+        <div class="container">
+            <div class="cs-meta-grid">
+                <div class="cs-meta-item">
+                    <p class="cs-meta-label">Role</p>
+                    <p class="cs-meta-value">UI/UX Designer</p>
+                </div>
+                <div class="cs-meta-item">
+                    <p class="cs-meta-label">Type</p>
+                    <p class="cs-meta-value">Individual Capstone</p>
+                </div>
+                <div class="cs-meta-item">
+                    <p class="cs-meta-label">Tool</p>
+                    <p class="cs-meta-value">Figma</p>
+                </div>
+                <div class="cs-meta-item">
+                    <p class="cs-meta-label">Duration</p>
+                    <p class="cs-meta-value">Dec 2025 – Mar 2026</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Content -->
+    <div class="cs-content">
+
+        <!-- Problem -->
+        <div class="cs-block">
+            <p class="cs-section-label">The Problem</p>
+            <h2>Gamers couldn't access high-end devices affordably</h2>
+            <p>High-end gaming and mobile devices are expensive — putting them out of reach for many gamers who only need them temporarily. There was no dedicated digital platform where users could browse available devices, verify their identity, and complete a rental in one streamlined flow.</p>
+            <p>GameNest was designed to solve this: a web app that lets gamers rent premium devices on demand, with a clear and trustworthy process from start to finish.</p>
+        </div>
+
+        <!-- Approach -->
+        <div class="cs-block">
+            <p class="cs-section-label">My Approach</p>
+            <h2>Research, wireframes, then high-fidelity</h2>
+            <p>I handled the entire design process end-to-end — from research to final prototype — as my individual internship capstone.</p>
+            <div class="cs-steps">
+                <div class="cs-step">
+                    <div class="cs-step-num">1</div>
+                    <div class="cs-step-body">
+                        <h4>User research</h4>
+                        <p>Identified the target audience — gamers who want short-term access to premium devices — and mapped their key needs: easy device browsing, transparent pricing, and a trustworthy identity verification process.</p>
+                    </div>
+                </div>
+                <div class="cs-step">
+                    <div class="cs-step-num">2</div>
+                    <div class="cs-step-body">
+                        <h4>Wireframing</h4>
+                        <p>Sketched low-fidelity wireframes to map out the full user journey before committing to visual decisions — covering login, device browsing, KYC verification, rental, and return flows.</p>
+                    </div>
+                </div>
+                <div class="cs-step">
+                    <div class="cs-step-num">3</div>
+                    <div class="cs-step-body">
+                        <h4>High-fidelity design in Figma</h4>
+                        <p>Translated wireframes into a complete, interactive Figma prototype. Used a bold dark aesthetic suited to the gaming audience, while keeping each screen focused and uncluttered despite covering a large number of states and flows.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenge -->
+        <div class="cs-block">
+            <p class="cs-section-label">Key Design Challenge</p>
+            <h2>Managing information density without cluttering screens</h2>
+            <p>GameNest required a large number of screens covering many user states — renting for yourself vs. a minor, KYC with document uploads and face matching, device detail pages, payment flows, active rental timers, and inspection results. The challenge was fitting all of this information into each screen without overwhelming the user.</p>
+            <div class="cs-callout">
+                <h4>How I addressed it</h4>
+                <p>I broke complex flows into focused, single-purpose screens — each screen asks the user to do only one thing. A consistent progress indicator across the KYC flow reduces anxiety around multi-step processes. Card-based layouts group related content and create visual breathing room, so screens feel organized even when they carry a lot of information.</p>
+            </div>
+        </div>
+
+        <!-- Outcome -->
+        <div class="cs-block">
+            <p class="cs-section-label">Outcome</p>
+            <h2>Approved, graded, and positively received</h2>
+            <div class="cs-outcomes">
+                <div class="cs-outcome-row">
+                    <div class="cs-outcome-dot"></div>
+                    <p>Delivered a full end-to-end Figma prototype covering all user flows as an individual internship capstone</p>
+                </div>
+                <div class="cs-outcome-row">
+                    <div class="cs-outcome-dot"></div>
+                    <p>Presented to and approved by supervisors at IntelliSeven Technology Solutions Inc.</p>
+                </div>
+                <div class="cs-outcome-row">
+                    <div class="cs-outcome-dot"></div>
+                    <p>Received positive feedback from the company on UX structure and visual design</p>
+                </div>
+                <div class="cs-outcome-row">
+                    <div class="cs-outcome-dot"></div>
+                    <p>Used as the primary graded output for my internship evaluation</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CTA -->
+    <section class="cs-cta" style="min-height: unset !important;">
+        <div class="cs-cta-inner">
+            <div class="cs-cta-text">
+                <h3>Want to see the full prototype?</h3>
+                <p>View the complete Figma file with all screens and interactions.</p>
+            </div>
+            <div class="cs-cta-links">
+                <a href="https://www.figma.com/design/omIHF0Zj5SA17Bl1RzQAAb/GameNest--Rental-Device-Web-App-?node-id=0-1&t=IuMZwWoB9HvccRnP-1" class="project-link link-figma" target="_blank">View Figma Prototype</a>
+                <a href="index.html#projects" class="project-link link-live">Back to Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Allen Gerard F. Dizon. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/allen-gerard-dizon-799544351/" class="social-link" target="_blank" title="LinkedIn" aria-label="LinkedIn" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.facebook.com/aegeezz" class="social-link" target="_blank" title="Facebook" aria-label="Facebook" rel="noopener noreferrer">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

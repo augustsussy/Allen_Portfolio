@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLAITS Case Study — Gee</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        section {
+            min-height: unset;
+            padding: 5rem 0;
+        }
+
+        .cs-hero {
+            min-height: 60vh !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+            position: relative;
+            overflow: hidden;
+            padding: 10rem 0 6rem !important;
+        }
+
+        .cs-hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: radial-gradient(circle at 70% 50%, rgba(212, 165, 116, 0.07) 0%, transparent 60%);
+        }
+
+        .cs-hero-inner {
+            text-align: center;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 3rem;
+            animation: fadeInUp 0.9s ease-out;
+        }
+
+        .cs-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+
+        .cs-back-link:hover { color: var(--accent); }
+
+        .cs-hero-label {
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .cs-hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .cs-hero-sub {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .cs-tags {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cs-meta {
+            background: var(--bg-secondary);
+            border-top: 1px solid rgba(212, 165, 116, 0.1);
+            border-bottom: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .cs-meta-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+        }
+
+        .cs-meta-item {
+            padding: 2rem;
+            border-right: 1px solid rgba(212, 165, 116, 0.1);
+            text-align: center;
+        }
+
+        .cs-meta-item:last-child { border-right: none; }
+
+        .cs-meta-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .cs-meta-value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .cs-content {
+            background: var(--bg-primary);
+        }
+
+        .cs-block {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+            border-bottom: 1px solid rgba(212, 165, 116, 0.08);
+        }
+
+        .cs-block:last-child { border-bottom: none; }
+
+        .cs-section-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+            font-weight: 500;
+        }
+
+        .cs-block h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: var(--text-primary);
+            margin-bottom: 1.25rem;
+            font-weight: 700;
+        }
+
+        .cs-block p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.85;
+            margin-bottom: 1rem;
+        }
+
+        .cs-block p:last-child { margin-bottom: 0; }
+
+        .cs-screens-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .cs-screen-item {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .cs-screen-item p {
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin: 0;
+            font-weight: 500;
+        }
+
+        .cs-callout {
+            background: rgba(212, 165, 116, 0.05);
+            border-left: 3px solid var(--accent);
+            border-radius: 10px;
+            padding: 1.5rem 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .cs-callout h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 0.75rem;
+        }
+
+        .cs-callout p { margin-bottom: 0; }
+
+        .cs-outcomes { margin-top: 1.25rem; }
+
+        .cs-outcome-row {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .cs-outcome-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+            margin-top: 8px;
+        }
+
+        .cs-outcome-row p { margin-bottom: 0; }
+
+        .cs-cta {
+            background: var(--bg-secondary);
+            border-top: 1px solid rgba(212, 165, 116, 0.1);
+        }
+
+        .cs-cta-inner {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 4rem 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .cs-cta-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .cs-cta-text p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .cs-cta-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .cs-hero-title { font-size: 2.5rem; }
+            .cs-hero-inner { padding: 0 1.5rem; }
+            .cs-meta-grid { grid-template-columns: repeat(2, 1fr); }
+            .cs-meta-item { border-bottom: 1px solid rgba(212, 165, 116, 0.1); }
+            .cs-block { padding: 3rem 1.5rem; }
+            .cs-screens-grid { grid-template-columns: repeat(2, 1fr); }
+            .cs-cta-inner { padding: 3rem 1.5rem; flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="index.html" class="logo">Gee</a>
+            <ul>
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="index.html#projects">Projects</a></li>
+                <li><a href="index.html#resume">Resume</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="cs-hero">
+        <div class="cs-hero-inner">
+            <a href="index.html#projects" class="cs-back-link">
+                <i class="fas fa-arrow-left"></i> Back to Projects
+            </a>
+            <p class="cs-hero-label">Case Study</p>
+            <h1 class="cs-hero-title">PLAITS</h1>
+            <p class="cs-hero-sub">A mobile meal planner app designed from scratch as a personal concept project.</p>
+            <div class="cs-tags">
+                <span class="tag">Mobile UI</span>
+                <span class="tag">UX Design</span>
+                <span class="tag">Figma</span>
+                <span class="tag">Meal Planning</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Meta strip -->
+    <section class="cs-meta" style="padding: 0 !important; min-height: unset !important;">
+        <div class="container">
+            <div class="cs-meta-grid">
+                <div class="cs-meta-item">
+                    <p class="cs-meta-label">Role</p>
+                    <p class="cs-meta-value">UI/UX Designer</p>
+                </div>
+                <div class="cs-meta-item">
+                    <p class="cs-meta-label">Type</p>
+                    <p class="cs-meta-value">Personal Project</p>
+                </div>
+                <div class="cs-meta-item">
+                    <p class="cs-meta-label">Tool</p>
+                    <p class="cs-meta-value">Figma</p>
+                </div>
+                <div class="cs-meta-item">
+                    <p class="cs-meta-label">Platform</p>
+                    <p class="cs-meta-value">Mobile (iOS-style)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Content -->
+    <div class="cs-content">
+
+        <!-- Overview -->
+        <div class="cs-block">
+            <p class="cs-section-label">Overview</p>
+            <h2>A meal planner that feels calm, not clinical</h2>
+            <p>PLAITS is a personal concept project I designed entirely from scratch in Figma. The goal was to design a mobile meal planning app that feels warm and approachable rather than the sterile, data-heavy aesthetic most nutrition apps default to.</p>
+            <p>I wanted to prove I could take a fully formed product idea from nothing to a complete, polished set of screens without a brief, a client, or a template to lean on.</p>
+        </div>
+
+        <!-- Screens -->
+        <div class="cs-block">
+            <p class="cs-section-label">Scope</p>
+            <h2>Full app coverage across 7 screen types</h2>
+            <p>Rather than designing just a few hero screens, I mapped out and designed the complete app experience, including:</p>
+            <div class="cs-screens-grid">
+                <div class="cs-screen-item"><p>Splash Screen</p></div>
+                <div class="cs-screen-item"><p>Loading Screen</p></div>
+                <div class="cs-screen-item"><p>Home Planner</p></div>
+                <div class="cs-screen-item"><p>Discover Feed</p></div>
+                <div class="cs-screen-item"><p>Daily Tracker</p></div>
+                <div class="cs-screen-item"><p>Groceries</p></div>
+                <div class="cs-screen-item"><p>Profile</p></div>
+            </div>
+        </div>
+
+        <!-- Process -->
+        <div class="cs-block">
+            <p class="cs-section-label">Process</p>
+            <h2>Straight to high-fidelity</h2>
+            <p>For PLAITS, I skipped wireframing and went directly into high-fidelity design in Figma. This was a deliberate choice for a personal concept project where the primary goal was to practice visual design, component building, and maintaining a consistent aesthetic across a full screen set.</p>
+            <p>I started by defining a color palette and type system, then built reusable components before designing any screens. That foundation meant every screen stayed consistent without having to manually match styles across the file.</p>
+            <div class="cs-callout">
+                <h4>Visual direction</h4>
+                <p>I chose a warm, earthy palette of blush pinks, soft beiges, and muted browns. The goal was to make the app feel like something you actually want to open, not a fitness tracker that makes you feel guilty. Clean card layouts, generous whitespace, and food photography placeholders all contributed to that tone.</p>
+            </div>
+        </div>
+
+        <!-- Challenge -->
+        <div class="cs-block">
+            <p class="cs-section-label">Key Design Challenge</p>
+            <h2>Fitting multiple features without cluttering the UI</h2>
+            <p>A meal planner has a lot of moving parts: weekly schedule, recipe discovery, nutrition tracking, grocery lists, and a user profile. Getting all of that into one app without making any single screen feel overwhelming was the core challenge.</p>
+            <div class="cs-callout">
+                <h4>How I addressed it</h4>
+                <p>Each screen was scoped to one primary task. The Home screen shows the week at a glance without surfacing nutrition numbers. The Track screen handles macros and daily goals separately. The Groceries screen organizes items by category so the list never feels like a wall of text. A persistent bottom navigation bar keeps movement between sections fast and familiar without taking up too much space.</p>
+            </div>
+        </div>
+
+        <!-- Outcome -->
+        <div class="cs-block">
+            <p class="cs-section-label">Outcome</p>
+            <h2>A complete, portfolio-ready mobile UI</h2>
+            <div class="cs-outcomes">
+                <div class="cs-outcome-row">
+                    <div class="cs-outcome-dot"></div>
+                    <p>Designed a full 7-screen mobile app from scratch with no brief or reference template</p>
+                </div>
+                <div class="cs-outcome-row">
+                    <div class="cs-outcome-dot"></div>
+                    <p>Built a reusable component library in Figma that kept the visual style consistent across all screens</p>
+                </div>
+                <div class="cs-outcome-row">
+                    <div class="cs-outcome-dot"></div>
+                    <p>Demonstrated the ability to handle a multi-feature product while keeping each screen focused and clean</p>
+                </div>
+                <div class="cs-outcome-row">
+                    <div class="cs-outcome-dot"></div>
+                    <p>One of the strongest visual pieces in my portfolio in terms of color, layout, and overall polish</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- CTA -->
+    <section class="cs-cta" style="min-height: unset !important;">
+        <div class="cs-cta-inner">
+            <div class="cs-cta-text">
+                <h3>Want to see the full prototype?</h3>
+                <p>View all screens and interactions in the Figma file.</p>
+            </div>
+            <div class="cs-cta-links">
+                <a href="https://www.figma.com/design/HugXcCj4IJ6J664LeYZRm7/PLAITS--MOBILE-UI-FOR-MEAL-PLANNER-?m=auto&t=YJCju9HEMIv6HAzU-6" class="project-link link-figma" target="_blank">View Figma Prototype</a>
+                <a href="index.html#projects" class="project-link link-live">Back to Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 Allen Gerard F. Dizon. All rights reserved.</p>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/in/allen-gerard-dizon-799544351/" class="social-link" target="_blank" title="LinkedIn" aria-label="LinkedIn" rel="noopener noreferrer">
+                    <i class="fab fa-linkedin-in" aria-hidden="true"></i>
+                </a>
+                <a href="https://www.facebook.com/aegeezz" class="social-link" target="_blank" title="Facebook" aria-label="Facebook" rel="noopener noreferrer">
+                    <i class="fab fa-facebook-f" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
