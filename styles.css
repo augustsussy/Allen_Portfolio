@@ -882,9 +882,9 @@ footer p {
         gap: 0 !important;
     }
 
-    /* Nav Menu - Fixed */
+    /* Nav Menu - Sliding mobile panel */
     .nav-menu {
-        display: none !important;
+        display: flex;
         position: fixed;
         top: 70px;
         left: 0;
@@ -900,15 +900,19 @@ footer p {
         list-style: none;
         padding: 1rem 0;
         overflow-y: auto;
-        visibility: hidden;
         opacity: 0;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-18px);
+        transition: transform 0.28s ease, opacity 0.28s ease, visibility 0s linear 0.28s;
     }
 
     .nav-menu.open {
-        display: flex !important;
-        visibility: visible;
         opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+        transition: transform 0.28s ease, opacity 0.28s ease, visibility 0s;
     }
 
     .nav-menu li {
@@ -1121,6 +1125,7 @@ footer p {
     .nav-menu {
         top: 60px;
         max-height: calc(100vh - 60px);
+        transform: translateY(-14px);
     }
 
     .nav-menu li a {
