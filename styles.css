@@ -389,44 +389,108 @@ section {
     line-height: 1.7;
 }
 
-/* Projects */
+/* =============================================
+   PROJECTS SECTION
+   ============================================= */
+
 #projects {
     background: var(--bg-secondary);
 }
 
+.project-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 1.5rem 0 1.5rem;
+}
+
+.filter-pill {
+    appearance: none;
+    border: 1px solid rgba(212, 165, 116, 0.22);
+    background: rgba(212, 165, 116, 0.06);
+    color: var(--text-secondary);
+    border-radius: 999px;
+    padding: 0.7rem 1.1rem;
+    font: inherit;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.filter-pill:hover {
+    border-color: rgba(212, 165, 116, 0.45);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+.filter-pill.is-active {
+    background: var(--gradient-1);
+    border-color: var(--accent);
+    color: var(--bg-primary);
+    box-shadow: 0 10px 24px rgba(212, 165, 116, 0.18);
+}
+
+/* Masonry: flex row of equal columns */
 .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
     margin-top: 3rem;
 }
 
+.masonry-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+/* Cards */
 .project-card {
+    position: relative;
+    width: 100%;
     background: var(--bg-primary);
     border-radius: 20px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid rgba(212, 165, 116, 0.1);
 }
 
-.project-card:hover {
-    transform: translateY(-10px);
+.project-card.is-hovered,
+.project-card:focus-within {
+    transform: translateY(-6px);
     box-shadow: var(--shadow-glow);
 }
 
-.project-image {
-    width: 100%;
-    height: 300px;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    color: var(--accent);
-    overflow: hidden;
-    position: relative;
+.project-card.is-hovered .project-image img,
+.project-card:focus-within .project-image img {
+    transform: scale(1.03);
 }
 
+/* Image container: natural height driven by image */
+.project-image {
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+}
+
+.project-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+/* Remove fixed heights — masonry handles layout now */
+.project-card--hero .project-image,
+.project-card--tall .project-image {
+    height: auto;
+}
+
+/* Badge */
 .badge-in-progress {
     position: absolute;
     top: 12px;
@@ -443,13 +507,78 @@ section {
     pointer-events: none;
 }
 
-.project-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+/* Overlay */
+.project-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.78);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
+.project-card.is-hovered .project-overlay,
+.project-card:focus-within .project-overlay {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.project-overlay-content {
+    width: 100%;
+    max-width: 320px;
+    text-align: center;
+    color: var(--text-primary);
+}
+
+.project-overlay-content h3 {
+    margin-bottom: 0.35rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.project-overlay-content p {
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.project-overlay-links {
+    display: flex;
+    justify-content: center;
+    gap: 0.65rem;
+    flex-wrap: wrap;
+}
+
+.project-overlay-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.85rem;
+    background: rgba(255, 255, 255, 0.08);
+    transition: all 0.25s ease;
+    pointer-events: auto;
+}
+
+.project-overlay-link:hover {
+    background: rgba(255, 255, 255, 0.18);
+    border-color: rgba(255, 255, 255, 0.6);
+    transform: translateY(-1px);
+}
+
+/* Legacy content styles (kept in case used elsewhere) */
 .project-content {
     padding: 2rem;
 }
@@ -470,17 +599,22 @@ section {
 
 .tag {
     padding: 0.4rem 1rem;
-    background: rgba(212, 165, 116, 0.1);
+    background: rgba(212, 165, 116, 0.08);
     color: var(--accent);
     border-radius: 20px;
     font-size: 0.85rem;
     border: 1px solid rgba(212, 165, 116, 0.2);
 }
 
-.project-content p {
+.project-content > p:not(.project-internship) {
     color: var(--text-secondary);
     margin-bottom: 1.5rem;
-    line-height: 1.7;
+    line-height: 1.55;
+    line-clamp: 2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .project-links {
@@ -524,7 +658,18 @@ section {
     box-shadow: 0 5px 20px rgba(212, 165, 116, 0.3);
 }
 
-/* Resume Section */
+/* GameNest internship label */
+.project-internship {
+    font-size: 0.8rem;
+    font-style: italic;
+    opacity: 0.6;
+    margin: 0.25rem 0 0.5rem;
+}
+
+/* =============================================
+   RESUME SECTION
+   ============================================= */
+
 .resume-section {
     margin-top: 3rem;
 }
@@ -707,7 +852,6 @@ footer p {
     color: var(--accent);
 }
 
-/* SVG icon sizing inside social links */
 .social-links a svg {
     width: 1.25rem;
     height: 1.25rem;
@@ -717,7 +861,6 @@ footer p {
 
 .social-links a svg { fill: currentColor; }
 
-/* Font Awesome icon sizing and focus styles */
 .social-link {
     color: var(--text-secondary);
     display: inline-flex;
@@ -798,14 +941,6 @@ footer p {
     line-height: 1.6;
 }
 
-/* GameNest internship label */
-.project-internship {
-    font-size: 0.8rem;
-    font-style: italic;
-    opacity: 0.6;
-    margin: 0.25rem 0 0.5rem;
-}
-/* Certificate link */
 .cert-link {
     display: inline-block;
     margin-top: 0.75rem;
@@ -820,6 +955,7 @@ footer p {
 .cert-link:hover {
     opacity: 1;
 }
+
 /* Hamburger button */
 .nav-toggle {
     display: none;
@@ -866,9 +1002,11 @@ footer p {
     transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Responsive Design - Tablet */
+/* =============================================
+   RESPONSIVE
+   ============================================= */
+
 @media (max-width: 768px) {
-    /* Navigation */
     .nav-toggle {
         display: flex;
     }
@@ -886,7 +1024,6 @@ footer p {
         gap: 0 !important;
     }
 
-    /* Nav Menu - Sliding mobile panel */
     .nav-menu {
         display: flex;
         position: fixed;
@@ -942,12 +1079,10 @@ footer p {
         color: var(--accent);
     }
 
-    /* Container */
     .container {
         padding: 0 1.5rem;
     }
 
-    /* Hero Section */
     .hero-content h1 {
         font-size: 2.5rem;
     }
@@ -965,7 +1100,6 @@ footer p {
         font-size: 0.95rem;
     }
 
-    /* Sections */
     section {
         padding: 4rem 0;
         min-height: auto;
@@ -985,7 +1119,6 @@ footer p {
         margin-bottom: 2.5rem;
     }
 
-    /* About Section */
     .about-content,
     .resume-grid {
         grid-template-columns: 1fr;
@@ -1005,7 +1138,6 @@ footer p {
         padding: 1.5rem;
     }
 
-    /* Services Grid */
     .services-grid {
         grid-template-columns: 1fr;
         gap: 1.5rem;
@@ -1022,18 +1154,24 @@ footer p {
         font-size: 1.3rem;
     }
 
-    /* Projects Grid */
+    /* Projects: single column on mobile */
     .projects-grid {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+        flex-direction: column;
+        gap: 12px;
     }
 
-    .project-card {
-        max-width: 100%;
+    .masonry-col {
+        width: 100%;
     }
 
-    .project-image {
-        height: 250px;
+    .project-filters {
+        gap: 0.5rem;
+        margin: 1.25rem 0 1.25rem;
+    }
+
+    .filter-pill {
+        padding: 0.6rem 0.95rem;
+        font-size: 0.85rem;
     }
 
     .project-content {
@@ -1063,7 +1201,6 @@ footer p {
         font-size: 0.9rem;
     }
 
-    /* Form Elements */
     .form-group input,
     .form-group textarea {
         padding: 0.85rem;
@@ -1075,7 +1212,6 @@ footer p {
         font-size: 0.95rem;
     }
 
-    /* Resume */
     .resume-column h3 {
         font-size: 1.5rem;
     }
@@ -1085,7 +1221,6 @@ footer p {
         font-size: 0.95rem;
     }
 
-    /* Experience */
     .experience-header {
         flex-direction: column;
         gap: 0.25rem;
@@ -1101,9 +1236,7 @@ footer p {
     }
 }
 
-/* Mobile Phones - Small */
 @media (max-width: 480px) {
-    /* Navigation */
     nav {
         padding: 1rem 0;
         border-bottom: 1px solid rgba(212, 165, 116, 0.1);
@@ -1128,7 +1261,6 @@ footer p {
         height: 2px;
     }
 
-    /* Nav Menu */
     .nav-menu {
         top: 60px;
         max-height: calc(100vh - 60px);
@@ -1144,12 +1276,10 @@ footer p {
         padding-left: 1.5rem;
     }
 
-    /* Container */
     .container {
         padding: 0 1rem;
     }
 
-    /* Hero Section */
     #home {
         min-height: 80vh;
         padding-top: 80px;
@@ -1178,7 +1308,6 @@ footer p {
         margin-top: 1.5rem;
     }
 
-    /* Sections */
     section {
         padding: 3rem 0;
     }
@@ -1199,7 +1328,6 @@ footer p {
         margin-bottom: 1.75rem;
     }
 
-    /* About Section */
     .about-content {
         gap: 1.5rem;
     }
@@ -1228,7 +1356,6 @@ footer p {
         font-size: 1rem;
     }
 
-    /* Services */
     .services-grid {
         gap: 1rem;
         max-width: 420px;
@@ -1255,14 +1382,8 @@ footer p {
         line-height: 1.6;
     }
 
-    /* Projects */
     .project-card {
         border-radius: 15px;
-    }
-
-    .project-image {
-        height: 200px;
-        border-radius: 15px 15px 0 0;
     }
 
     .project-content {
@@ -1296,11 +1417,10 @@ footer p {
         font-size: 0.85rem;
     }
 
-    .project-content p {
+    .project-content > p:not(.project-internship) {
         font-size: 0.9rem;
     }
 
-    /* Resume */
     .resume-column h3 {
         font-size: 1.2rem;
         margin-bottom: 1.5rem;
@@ -1349,7 +1469,6 @@ footer p {
         font-size: 0.9rem;
     }
 
-    /* Form */
     .contact-form {
         gap: 1rem;
     }
@@ -1376,7 +1495,6 @@ footer p {
         width: 100%;
     }
 
-    /* Footer & Social */
     footer {
         padding: 2rem 0;
     }
@@ -1396,7 +1514,6 @@ footer p {
     }
 }
 
-/* Extra Small Phones */
 @media (max-width: 360px) {
     .hero-content h1 {
         font-size: 1.5rem;

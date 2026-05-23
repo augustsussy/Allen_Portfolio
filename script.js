@@ -1,6 +1,120 @@
-// Hamburger menu toggle
+/* =============================================
+   MASONRY GRID
+   ============================================= */
+
+(function () {
+    'use strict';
+
+    const NUM_COLS = 3;
+
+    function buildMasonry(cards) {
+        const grid = document.querySelector('.projects-grid');
+        if (!grid) return;
+
+        grid.querySelectorAll('.masonry-col').forEach(c => c.remove());
+
+        const cols = Array.from({ length: NUM_COLS }, () => {
+            const col = document.createElement('div');
+            col.className = 'masonry-col';
+            grid.appendChild(col);
+            return col;
+        });
+
+        const heights = new Array(NUM_COLS).fill(0);
+
+        cards.forEach(card => {
+            const minHeight = Math.min(...heights);
+            const colIndex = heights.indexOf(minHeight);
+            cols[colIndex].appendChild(card);
+
+            const img = card.querySelector('img');
+            if (img && img.complete && img.naturalHeight && img.naturalWidth) {
+                const renderedW = cols[colIndex].getBoundingClientRect().width || 400;
+                heights[colIndex] += (renderedW * img.naturalHeight / img.naturalWidth) + 12;
+            } else {
+                heights[colIndex] += 280;
+            }
+        });
+
+        reattachHover();
+    }
+
+    function reattachHover() {
+        document.querySelectorAll('.project-card').forEach(card => {
+            if (card.dataset.hoverBound === 'true') {
+                return;
+            }
+
+            card.addEventListener('mouseenter', () => card.classList.add('is-hovered'));
+            card.addEventListener('mouseleave', () => card.classList.remove('is-hovered'));
+            card.dataset.hoverBound = 'true';
+        });
+    }
+
+    function getVisibleCards() {
+        return Array.from(document.querySelectorAll('.project-card:not([hidden])'));
+    }
+
+    function initMasonry() {
+        const grid = document.querySelector('.projects-grid');
+        if (!grid) return;
+
+        /* Detach all cards so columns can be rebuilt cleanly */
+        Array.from(document.querySelectorAll('.project-card')).forEach(card => {
+            grid.appendChild(card);
+        });
+
+        buildMasonry(getVisibleCards());
+
+        /* Rebuild on resize */
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => buildMasonry(getVisibleCards()), 120);
+        });
+
+        /* Rebuild once all images have loaded (accurate height estimation) */
+        const images = Array.from(document.querySelectorAll('.projects-grid img'));
+        let loadedCount = 0;
+
+        function onImageReady() {
+            loadedCount++;
+            if (loadedCount === images.length) buildMasonry(getVisibleCards());
+        }
+
+        images.forEach(img => {
+            if (img.complete) {
+                onImageReady();
+            } else {
+                img.addEventListener('load', onImageReady);
+                img.addEventListener('error', onImageReady);
+            }
+        });
+    }
+
+    window.__buildMasonry = buildMasonry;
+    window.__getVisibleCards = getVisibleCards;
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initMasonry);
+    } else {
+        initMasonry();
+    }
+})();
+
+/* =============================================
+   HAMBURGER MENU
+   ============================================= */
+
 const navToggle = document.querySelector('.nav-toggle');
 const navMenu = document.querySelector('.nav-menu');
+
+function closeNav() {
+    navMenu.classList.remove('open');
+    navToggle.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', false);
+    document.body.style.overflow = '';
+}
 
 if (navToggle && navMenu) {
     navToggle.addEventListener('click', (e) => {
@@ -11,64 +125,45 @@ if (navToggle && navMenu) {
         document.body.style.overflow = isOpen ? 'hidden' : '';
     });
 
-    // Close menu when a nav link is clicked
     navMenu.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', (e) => {
-            navMenu.classList.remove('open');
-            navToggle.classList.remove('open');
-            navToggle.setAttribute('aria-expanded', false);
-            document.body.style.overflow = '';
-        });
+        link.addEventListener('click', () => closeNav());
     });
 
-    // Close menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
-            if (navMenu.classList.contains('open')) {
-                navMenu.classList.remove('open');
-                navToggle.classList.remove('open');
-                navToggle.setAttribute('aria-expanded', false);
-                document.body.style.overflow = '';
-            }
+        if (navMenu.classList.contains('open') &&
+            !navToggle.contains(e.target) &&
+            !navMenu.contains(e.target)) {
+            closeNav();
         }
     });
 
-    // Close menu on escape key
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && navMenu.classList.contains('open')) {
-            navMenu.classList.remove('open');
-            navToggle.classList.remove('open');
-            navToggle.setAttribute('aria-expanded', false);
-            document.body.style.overflow = '';
-        }
+        if (e.key === 'Escape' && navMenu.classList.contains('open')) closeNav();
     });
 }
 
-// Smooth scrolling for navigation links
+/* =============================================
+   SMOOTH SCROLL
+   ============================================= */
+
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     });
 });
 
-// Contact form uses native HTML POST to FormSubmit (no JS interception)
+/* =============================================
+   ACTIVE NAV ON SCROLL
+   ============================================= */
 
-// Active nav link on scroll
 window.addEventListener('scroll', () => {
     let current = '';
-    const sections = document.querySelectorAll('section');
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        if (pageYOffset >= sectionTop - 200) {
+    document.querySelectorAll('section').forEach(section => {
+        if (pageYOffset >= section.offsetTop - 200) {
             current = section.getAttribute('id');
         }
     });
@@ -81,42 +176,43 @@ window.addEventListener('scroll', () => {
     });
 });
 
-// ENHANCED PARALLAX SCROLLING FOR ALL SECTIONS
+/* =============================================
+   PARALLAX
+   ============================================= */
+
 let ticking = false;
 
 function updateParallax() {
-    // Keep the scroll-driven parallax minimal and focused on the hero
     const scrolled = window.pageYOffset;
-
     const hero = document.querySelector('#home');
+
     if (hero) {
         const heroContent = hero.querySelector('.hero-content');
         if (heroContent) {
-            // Use a smaller, clamped translate and GPU-accelerated transform
-            const maxTranslate = 60; // px
+            const maxTranslate = 60;
             const y = Math.min(maxTranslate, Math.max(-maxTranslate, scrolled * 0.2));
             heroContent.style.transform = `translate3d(0, ${y}px, 0)`;
-
-            // Slight opacity fade but clamped between 0.35 and 1 for readability
-            const opacity = Math.max(0.35, 1 - (scrolled * 0.0015));
-            heroContent.style.opacity = opacity;
+            heroContent.style.opacity = Math.max(0.35, 1 - scrolled * 0.0015);
         }
     }
 
     ticking = false;
 }
 
-// Optimized scroll handler with requestAnimationFrame
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', () => {
     if (!ticking) {
         window.requestAnimationFrame(updateParallax);
         ticking = true;
     }
 });
 
-// Initialize on page load
-document.addEventListener('DOMContentLoaded', function() {
-    // Set initial states for animated elements and reveal them once when they enter viewport
+/* =============================================
+   DOMContentLoaded — REVEAL ANIMATIONS + FILTER
+   ============================================= */
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    /* --- Reveal animations --- */
     const selectors = [
         '.service-card',
         '.project-card',
@@ -128,15 +224,12 @@ document.addEventListener('DOMContentLoaded', function() {
         '.experience-item'
     ];
 
-    // Apply initial hidden state with small offsets
     document.querySelectorAll(selectors.join(',')).forEach(el => {
         el.style.opacity = '0';
         el.style.willChange = 'transform, opacity';
-        // Default transition for reveal (will be overridden for hero)
         el.style.transition = 'transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease';
     });
 
-    // Per-type initial transform offsets
     document.querySelectorAll('.service-card').forEach(el => el.style.transform = 'translate3d(0, 60px, 0)');
     document.querySelectorAll('.project-card').forEach(el => el.style.transform = 'translate3d(0, 40px, 0)');
     document.querySelectorAll('.resume-item').forEach(el => el.style.transform = 'translate3d(40px, 0, 0)');
@@ -146,37 +239,56 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.section-heading').forEach(el => el.style.transform = 'translate3d(0, 30px, 0)');
     document.querySelectorAll('.experience-item').forEach(el => el.style.transform = 'translate3d(-40px, 0, 0)');
 
-    // Hero gets a quicker transition for responsive parallax
     const heroContent = document.querySelector('.hero-content');
     if (heroContent) {
         heroContent.style.transition = 'transform 0.2s ease-out, opacity 0.3s ease';
         heroContent.style.willChange = 'transform, opacity';
     }
 
-    // IntersectionObserver to reveal elements once when they enter viewport
-    const observerOptions = {
-        root: null,
-        rootMargin: '0px 0px -10% 0px',
-        threshold: 0.18
-    };
-
     const revealObserver = new IntersectionObserver((entries, obs) => {
         entries.forEach(entry => {
-            const el = entry.target;
             if (entry.isIntersecting) {
-                // Reveal: reset transform and opacity
-                el.style.transform = 'translate3d(0,0,0)';
-                el.style.opacity = '1';
-
-                // Stop observing once revealed to avoid flicker and extra work
-                obs.unobserve(el);
+                entry.target.style.transform = 'translate3d(0,0,0)';
+                entry.target.style.opacity = '1';
+                obs.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.18 });
 
-    // Observe all elements in the selector list
     document.querySelectorAll(selectors.join(',')).forEach(el => revealObserver.observe(el));
 
-    // Trigger initial hero parallax
+    /* --- Filter pills — delegates to masonry rebuilder --- */
+    const filterPills = document.querySelectorAll('.filter-pill');
+
+    if (filterPills.length) {
+        filterPills.forEach(pill => {
+            pill.addEventListener('click', () => {
+                filterPills.forEach(p => {
+                    p.classList.remove('is-active');
+                    p.setAttribute('aria-pressed', 'false');
+                });
+                pill.classList.add('is-active');
+                pill.setAttribute('aria-pressed', 'true');
+
+                const filter = pill.dataset.filter || 'all';
+
+                /* Hide/show cards */
+                document.querySelectorAll('.project-card').forEach(card => {
+                    if (filter === 'all') {
+                        card.hidden = false;
+                    } else {
+                        const tags = (card.dataset.tags || '').split(/\s+/).filter(Boolean);
+                        card.hidden = !tags.includes(filter);
+                    }
+                });
+
+                /* Rebuild masonry with only visible cards */
+                if (window.__buildMasonry && window.__getVisibleCards) {
+                    window.__buildMasonry(window.__getVisibleCards());
+                }
+            });
+        });
+    }
+
     updateParallax();
 });
