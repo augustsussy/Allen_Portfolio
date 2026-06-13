@@ -1,41 +1,11 @@
 /* =============================================
-   MASONRY GRID
+   PROJECTS GRID
    ============================================= */
 
 (function () {
     'use strict';
 
-    const NUM_COLS = 3;
-
     function buildMasonry(cards) {
-        const grid = document.querySelector('.projects-grid');
-        if (!grid) return;
-
-        grid.querySelectorAll('.masonry-col').forEach(c => c.remove());
-
-        const cols = Array.from({ length: NUM_COLS }, () => {
-            const col = document.createElement('div');
-            col.className = 'masonry-col';
-            grid.appendChild(col);
-            return col;
-        });
-
-        const heights = new Array(NUM_COLS).fill(0);
-
-        cards.forEach(card => {
-            const minHeight = Math.min(...heights);
-            const colIndex = heights.indexOf(minHeight);
-            cols[colIndex].appendChild(card);
-
-            const img = card.querySelector('img');
-            if (img && img.complete && img.naturalHeight && img.naturalWidth) {
-                const renderedW = cols[colIndex].getBoundingClientRect().width || 400;
-                heights[colIndex] += (renderedW * img.naturalHeight / img.naturalWidth) + 12;
-            } else {
-                heights[colIndex] += 280;
-            }
-        });
-
         reattachHover();
     }
 
@@ -59,37 +29,7 @@
         const grid = document.querySelector('.projects-grid');
         if (!grid) return;
 
-        /* Detach all cards so columns can be rebuilt cleanly */
-        Array.from(document.querySelectorAll('.project-card')).forEach(card => {
-            grid.appendChild(card);
-        });
-
         buildMasonry(getVisibleCards());
-
-        /* Rebuild on resize */
-        let resizeTimer;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimer);
-            resizeTimer = setTimeout(() => buildMasonry(getVisibleCards()), 120);
-        });
-
-        /* Rebuild once all images have loaded (accurate height estimation) */
-        const images = Array.from(document.querySelectorAll('.projects-grid img'));
-        let loadedCount = 0;
-
-        function onImageReady() {
-            loadedCount++;
-            if (loadedCount === images.length) buildMasonry(getVisibleCards());
-        }
-
-        images.forEach(img => {
-            if (img.complete) {
-                onImageReady();
-            } else {
-                img.addEventListener('load', onImageReady);
-                img.addEventListener('error', onImageReady);
-            }
-        });
     }
 
     window.__buildMasonry = buildMasonry;
@@ -257,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelectorAll(selectors.join(',')).forEach(el => revealObserver.observe(el));
 
-    /* --- Filter pills — delegates to masonry rebuilder --- */
+    /* --- Filter pills --- */
     const filterPills = document.querySelectorAll('.filter-pill');
 
     if (filterPills.length) {
@@ -282,7 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                /* Rebuild masonry with only visible cards */
                 if (window.__buildMasonry && window.__getVisibleCards) {
                     window.__buildMasonry(window.__getVisibleCards());
                 }
